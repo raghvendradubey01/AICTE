@@ -5,23 +5,29 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
   Search,
-  ShieldCheck,
+  Home,
+  Users,
+  Compass,
+  Briefcase,
+  Archive,
+  MessageSquare,
   Bell,
   Sun,
   Moon,
   ChevronDown,
+  ShieldCheck,
+  Sparkles,
+  Users2,
   User,
   GraduationCap,
-  Sparkles,
-  ExternalLink,
-  CheckCircle2,
-  Users2,
+  CalendarDays,
 } from 'lucide-react';
 import { useCampus } from '@/context/CampusContext';
 import { COLLEGE_CONFIG } from '@/lib/supabase';
 
 export const Navbar: React.FC = () => {
   const router = useRouter();
+  const pathname = usePathname();
   const {
     currentUser,
     students,
@@ -46,209 +52,226 @@ export const Navbar: React.FC = () => {
     }
   };
 
+  const navItems = [
+    { href: '/', label: 'Home', icon: Home },
+    { href: '/directory', label: 'My Network', icon: Users },
+    { href: '/bridge', label: 'Bridge', icon: Compass },
+    { href: '/teams', label: 'Teams', icon: Briefcase },
+    { href: '/vault', label: 'Vault', icon: Archive },
+    { href: '/clubs', label: 'Clubs', icon: CalendarDays },
+    { href: '/messages', label: 'Messaging', icon: MessageSquare, badge: 'Active' },
+  ];
+
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+    <header className="sticky top-0 z-40 w-full border-b border-border bg-card shadow-xs">
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-3 sm:px-6">
         
-        {/* Left: Brand & College Badge */}
-        <div className="flex items-center gap-3">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 text-white shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
-              <GraduationCap className="h-5 w-5" />
+        {/* Left: LinkedIn-style CC Logo & Global Search */}
+        <div className="flex items-center gap-2 sm:gap-3 flex-1 max-w-md">
+          <Link href="/" className="flex items-center gap-1.5 shrink-0 group">
+            {/* LinkedIn-styled Blue App Icon */}
+            <div className="flex h-9 w-9 items-center justify-center rounded-md bg-[#0a66c2] text-white shadow-xs font-black text-xl tracking-tighter group-hover:bg-[#004182] transition-colors">
+              <span className="font-sans">in</span>
             </div>
-            <div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-bold text-lg tracking-tight text-foreground">
-                  Campus<span className="text-indigo-600 dark:text-indigo-400">Connect</span>
-                </span>
-                <span className="rounded bg-indigo-100 dark:bg-indigo-950/60 px-1.5 py-0.5 text-[10px] font-semibold text-indigo-700 dark:text-indigo-300">
-                  v1.0
-                </span>
-              </div>
-              <p className="hidden md:block text-[11px] text-muted-foreground font-medium">
-                The Harvard-Style Intra-Campus Network
-              </p>
+            <div className="hidden lg:block leading-none">
+              <span className="font-extrabold text-sm tracking-tight text-foreground">
+                Campus<span className="text-[#0a66c2] dark:text-[#70b5f9]">Connect</span>
+              </span>
             </div>
           </Link>
 
-          {/* Institutional Verification Badge */}
-          <div className="hidden lg:flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-300">
-            <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
-            <span className="font-semibold">{COLLEGE_CONFIG.name}</span>
-            <span className="text-emerald-500/60">•</span>
-            <span className="text-[11px] opacity-90">.ac.in Verified</span>
-          </div>
-        </div>
-
-        {/* Center: Global Search Bar */}
-        <form onSubmit={handleSearchSubmit} className="hidden sm:flex relative flex-1 max-w-md mx-6">
-          <div className="relative w-full">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          {/* Search Bar - LinkedIn Styled with #edf3f8 pill input */}
+          <form onSubmit={handleSearchSubmit} className="relative flex-1 max-w-xs sm:max-w-sm">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
             <input
               type="text"
               value={globalSearchQuery}
               onChange={(e) => setGlobalSearchQuery(e.target.value)}
-              placeholder="Search students, skills, PYQs, hackathons..."
-              className="w-full rounded-full border border-border bg-muted/40 py-2 pl-10 pr-12 text-sm text-foreground placeholder:text-muted-foreground focus:border-indigo-500 focus:bg-background focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all"
+              placeholder="Search students, skills, PYQs..."
+              className="w-full rounded-md border-0 bg-muted/70 dark:bg-muted py-1.5 pl-8 pr-3 text-xs text-foreground placeholder:text-muted-foreground focus:bg-background focus:ring-1 focus:ring-foreground focus:outline-none transition-all"
             />
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-[10px] font-medium text-muted-foreground border border-border/80 rounded px-1.5 py-0.5">
-              <span>↵</span>
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
 
-        {/* Right: Actions, Theme, Notifs & User Pill */}
-        <div className="flex items-center gap-2.5">
-          {/* Contributor Mock Mode Indicator */}
-          {isMockMode && (
-            <div className="hidden xl:flex items-center gap-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 px-2.5 py-1 text-[11px] font-medium text-amber-700 dark:text-amber-300" title="Running in Contributor Mock Mode. Zero external DB setup needed!">
-              <Sparkles className="h-3 w-3 text-amber-500 animate-pulse" />
-              <span>Mock Contributor Mode</span>
-            </div>
-          )}
+        {/* Center / Right: LinkedIn-style 2-line Navigation Icons */}
+        <nav className="flex items-center h-full">
+          <div className="hidden md:flex items-center h-full">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              const Icon = item.icon;
 
-          {/* Dark / Light Toggle */}
-          <button
-            onClick={toggleTheme}
-            aria-label="Toggle theme"
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-foreground hover:bg-muted/70 transition-colors"
-          >
-            {theme === 'dark' ? (
-              <Sun className="h-4 w-4 text-amber-400" />
-            ) : (
-              <Moon className="h-4 w-4 text-slate-700" />
-            )}
-          </button>
-
-          {/* Notifications Dropdown */}
-          <div className="relative">
-            <button
-              onClick={() => setIsNotifOpen(!isNotifOpen)}
-              className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-foreground hover:bg-muted/70 transition-colors"
-              aria-label="Notifications"
-            >
-              <Bell className="h-4 w-4" />
-              {unreadNotificationsCount > 0 && (
-                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white ring-2 ring-background">
-                  {unreadNotificationsCount}
-                </span>
-              )}
-            </button>
-
-            {/* Notifications Popover */}
-            {isNotifOpen && (
-              <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-xl border border-border bg-card p-3 shadow-xl z-50 animate-in fade-in zoom-in-95 duration-150">
-                <div className="flex items-center justify-between pb-2 mb-2 border-b border-border">
-                  <div className="flex items-center gap-2">
-                    <Bell className="h-4 w-4 text-indigo-500" />
-                    <span className="text-sm font-semibold text-foreground">Campus Alerts</span>
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`relative flex flex-col items-center justify-center min-w-[64px] sm:min-w-[72px] h-full px-1 text-center transition-colors group ${
+                    isActive
+                      ? 'text-foreground font-semibold'
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  <div className="relative">
+                    <Icon className={`h-5 w-5 ${isActive ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'}`} />
+                    {item.badge && (
+                      <span className="absolute -top-1 -right-1.5 h-2 w-2 rounded-full bg-emerald-500 ring-2 ring-card" />
+                    )}
                   </div>
-                  <span className="text-xs text-muted-foreground">{notifications.length} updates</span>
-                </div>
-                <div className="max-h-72 overflow-y-auto space-y-2">
-                  {notifications.map((notif) => (
-                    <div
-                      key={notif.id}
-                      onClick={() => markNotificationAsRead(notif.id)}
-                      className={`p-2.5 rounded-lg text-xs cursor-pointer transition-colors ${
-                        notif.read ? 'bg-muted/30 hover:bg-muted/50' : 'bg-indigo-50/60 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-800'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="font-semibold text-foreground">{notif.title}</span>
-                        <span className="text-[10px] text-muted-foreground">{notif.timestamp}</span>
-                      </div>
-                      <p className="mt-1 text-muted-foreground leading-relaxed">{notif.description}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+                  <span className="text-[11px] leading-tight mt-0.5">{item.label}</span>
 
-          {/* User Profile Pill & Perspective Switcher */}
-          <div className="relative">
-            <button
-              onClick={() => setIsProfileOpen(!isProfileOpen)}
-              className="flex items-center gap-2 rounded-full border border-border bg-card p-1 pr-3 hover:bg-muted/50 transition-colors"
-            >
-              <img
-                src={currentUser.avatar}
-                alt={currentUser.name}
-                className="h-7 w-7 rounded-full object-cover ring-1 ring-border"
-              />
-              <div className="hidden sm:block text-left text-xs leading-none">
-                <div className="font-semibold text-foreground">{currentUser.name}</div>
-                <div className="mt-0.5 text-[10px] text-muted-foreground">
-                  {currentUser.year} • {currentUser.branch}
-                </div>
-              </div>
-              <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
-            </button>
+                  {/* LinkedIn Signature Bottom Active Indicator Line */}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-foreground" />
+                  )}
+                </Link>
+              );
+            })}
 
-            {/* Profile & Switcher Menu */}
-            {isProfileOpen && (
-              <div className="absolute right-0 mt-2 w-72 rounded-xl border border-border bg-card p-3 shadow-xl z-50 animate-in fade-in zoom-in-95 duration-150">
-                <div className="flex items-center gap-3 pb-3 mb-3 border-b border-border">
-                  <img
-                    src={currentUser.avatar}
-                    alt={currentUser.name}
-                    className="h-10 w-10 rounded-full object-cover ring-2 ring-indigo-500/20"
-                  />
-                  <div>
-                    <h4 className="text-sm font-bold text-foreground">{currentUser.name}</h4>
-                    <p className="text-xs text-muted-foreground">{currentUser.email}</p>
-                    <div className="mt-1 flex items-center gap-1.5 text-[10px] font-semibold text-indigo-600 dark:text-indigo-400">
-                      <span>🏆 {currentUser.karmaPoints} Campus Karma</span>
-                    </div>
+            {/* Notifications Item */}
+            <div className="relative flex items-center h-full">
+              <button
+                onClick={() => setIsNotifOpen(!isNotifOpen)}
+                className="relative flex flex-col items-center justify-center min-w-[64px] h-full px-1 text-center text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="Notifications"
+              >
+                <div className="relative">
+                  <Bell className="h-5 w-5" />
+                  {unreadNotificationsCount > 0 && (
+                    <span className="absolute -top-1 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-600 text-[10px] font-bold text-white ring-2 ring-card">
+                      {unreadNotificationsCount}
+                    </span>
+                  )}
+                </div>
+                <span className="text-[11px] leading-tight mt-0.5">Notifications</span>
+              </button>
+
+              {/* Notifications Popover */}
+              {isNotifOpen && (
+                <div className="absolute right-0 top-14 w-80 sm:w-96 rounded-lg border border-border bg-card p-3 shadow-xl z-50 animate-in fade-in zoom-in-95 duration-100">
+                  <div className="flex items-center justify-between pb-2 mb-2 border-b border-border">
+                    <span className="text-xs font-bold text-foreground">Campus Notifications</span>
+                    <span className="text-[10px] text-muted-foreground">{notifications.length} recent</span>
                   </div>
-                </div>
-
-                {/* Perspective Switcher */}
-                <div className="mb-2">
-                  <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5 flex items-center gap-1">
-                    <Users2 className="h-3 w-3" />
-                    <span>Switch Test Perspective</span>
-                  </p>
-                  <div className="space-y-1">
-                    {students.slice(0, 4).map((s) => (
-                      <button
-                        key={s.id}
-                        onClick={() => {
-                          switchUserById(s.id);
-                          setIsProfileOpen(false);
-                        }}
-                        className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-colors text-left ${
-                          s.id === currentUser.id
-                            ? 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 font-semibold'
-                            : 'hover:bg-muted text-foreground'
+                  <div className="max-h-72 overflow-y-auto space-y-1.5">
+                    {notifications.map((notif) => (
+                      <div
+                        key={notif.id}
+                        onClick={() => markNotificationAsRead(notif.id)}
+                        className={`p-2 rounded-md text-xs cursor-pointer transition-colors ${
+                          notif.read ? 'hover:bg-muted/40' : 'bg-muted/60 font-semibold'
                         }`}
                       >
-                        <div className="flex items-center gap-2">
-                          <img src={s.avatar} alt={s.name} className="h-5 w-5 rounded-full object-cover" />
-                          <span>{s.name}</span>
+                        <div className="flex items-center justify-between">
+                          <span className="text-foreground">{notif.title}</span>
+                          <span className="text-[10px] text-muted-foreground">{notif.timestamp}</span>
                         </div>
-                        <span className="text-[10px] text-muted-foreground">{s.year} • {s.branch}</span>
-                      </button>
+                        <p className="mt-0.5 text-[11px] text-muted-foreground font-normal leading-relaxed">
+                          {notif.description}
+                        </p>
+                      </div>
                     ))}
                   </div>
                 </div>
+              )}
+            </div>
 
-                <div className="pt-2 border-t border-border flex items-center justify-between text-xs">
-                  <Link
-                    href={`/directory?student=${currentUser.id}`}
-                    onClick={() => setIsProfileOpen(false)}
-                    className="text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1"
-                  >
-                    <User className="h-3 w-3" />
-                    <span>View My Public Card</span>
-                  </Link>
+            {/* LinkedIn-style "Me" Avatar Trigger */}
+            <div className="relative flex items-center h-full border-l border-border/80 pl-2">
+              <button
+                onClick={() => setIsProfileOpen(!isProfileOpen)}
+                className="flex flex-col items-center justify-center min-w-[58px] h-full px-1 text-center text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <img
+                  src={currentUser.avatar}
+                  alt={currentUser.name}
+                  className="h-5 w-5 rounded-full object-cover ring-1 ring-border"
+                />
+                <span className="text-[11px] leading-tight mt-0.5 flex items-center gap-0.5">
+                  <span>Me</span>
+                  <ChevronDown className="h-2.5 w-2.5" />
+                </span>
+              </button>
+
+              {/* "Me" Profile Menu */}
+              {isProfileOpen && (
+                <div className="absolute right-0 top-14 w-64 rounded-lg border border-border bg-card p-3 shadow-xl z-50 animate-in fade-in zoom-in-95 duration-100">
+                  <div className="flex items-start gap-2.5 pb-2.5 border-b border-border">
+                    <img
+                      src={currentUser.avatar}
+                      alt={currentUser.name}
+                      className="h-10 w-10 rounded-full object-cover ring-1 ring-border"
+                    />
+                    <div className="overflow-hidden">
+                      <div className="font-bold text-xs text-foreground truncate">{currentUser.name}</div>
+                      <div className="text-[10px] text-muted-foreground truncate">{currentUser.headline}</div>
+                      <div className="text-[10px] text-muted-foreground mt-0.5">
+                        {currentUser.year} • {currentUser.branch}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="py-2 border-b border-border">
+                    <Link
+                      href={`/directory?student=${currentUser.id}`}
+                      onClick={() => setIsProfileOpen(false)}
+                      className="w-full block text-center rounded-full border border-[#0a66c2] text-[#0a66c2] dark:text-[#70b5f9] py-1 text-xs font-bold hover:bg-[#0a66c2]/10 transition-colors"
+                    >
+                      View Profile
+                    </Link>
+                  </div>
+
+                  {/* Perspective Switcher */}
+                  <div className="pt-2">
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1.5 flex items-center gap-1">
+                      <Users2 className="h-3 w-3" />
+                      <span>Switch Perspective</span>
+                    </div>
+                    <div className="space-y-1">
+                      {students.slice(0, 4).map((s) => (
+                        <button
+                          key={s.id}
+                          onClick={() => {
+                            switchUserById(s.id);
+                            setIsProfileOpen(false);
+                          }}
+                          className={`w-full flex items-center justify-between px-2 py-1.5 rounded-md text-xs transition-colors text-left ${
+                            s.id === currentUser.id
+                              ? 'bg-muted text-foreground font-bold'
+                              : 'hover:bg-muted/50 text-muted-foreground'
+                          }`}
+                        >
+                          <span className="truncate">{s.name}</span>
+                          <span className="text-[10px] shrink-0 text-muted-foreground">{s.year}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
 
-        </div>
+          {/* Quick Right Utilities (Theme & Verification) */}
+          <div className="flex items-center gap-1.5 pl-2">
+            {/* Institutional Badge */}
+            <div className="hidden xl:flex items-center gap-1 rounded bg-muted/60 px-2 py-1 text-[11px] font-semibold text-foreground" title="Institutional Domain Verified">
+              <ShieldCheck className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
+              <span className="truncate max-w-[130px]">{COLLEGE_CONFIG.code} Verified</span>
+            </div>
+
+            {/* Dark/Light Toggle */}
+            <button
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+              className="flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+            >
+              {theme === 'dark' ? (
+                <Sun className="h-4 w-4 text-amber-400" />
+              ) : (
+                <Moon className="h-4 w-4 text-slate-700" />
+              )}
+            </button>
+          </div>
+        </nav>
 
       </div>
     </header>

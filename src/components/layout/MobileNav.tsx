@@ -4,10 +4,10 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  Flame,
+  Home,
   Users,
   Compass,
-  Rocket,
+  Briefcase,
   Archive,
   MessageSquare,
   CalendarDays,
@@ -17,17 +17,16 @@ export const MobileNav: React.FC = () => {
   const pathname = usePathname();
 
   const navItems = [
-    { href: '/', label: 'Pulse', icon: Flame },
-    { href: '/directory', label: 'Students', icon: Users },
+    { href: '/', label: 'Home', icon: Home },
+    { href: '/directory', label: 'Network', icon: Users },
     { href: '/bridge', label: 'Bridge', icon: Compass },
-    { href: '/teams', label: 'Teams', icon: Rocket },
+    { href: '/teams', label: 'Teams', icon: Briefcase },
     { href: '/vault', label: 'Vault', icon: Archive },
-    { href: '/clubs', label: 'Clubs', icon: CalendarDays },
     { href: '/messages', label: 'Chat', icon: MessageSquare },
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 md:hidden border-t border-border bg-background/95 backdrop-blur-md px-2 py-1.5 flex items-center justify-around shadow-lg">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 md:hidden border-t border-border bg-card px-2 py-1 flex items-center justify-around shadow-md">
       {navItems.map((item) => {
         const isActive = pathname === item.href;
         const Icon = item.icon;
@@ -36,13 +35,13 @@ export const MobileNav: React.FC = () => {
           <Link
             key={item.href}
             href={item.href}
-            className={`flex flex-col items-center justify-center py-1 px-2 rounded-lg text-[10px] font-medium transition-colors ${
+            className={`flex flex-col items-center justify-center py-1 px-2 text-[10px] transition-colors ${
               isActive
-                ? 'text-indigo-600 dark:text-indigo-400 font-bold'
+                ? 'text-[#0a66c2] dark:text-[#70b5f9] font-bold'
                 : 'text-muted-foreground hover:text-foreground'
             }`}
           >
-            <Icon className={`h-4 w-4 mb-0.5 ${isActive ? 'stroke-[2.5]' : 'stroke-[1.75]'}`} />
+            <Icon className={`h-5 w-5 mb-0.5 ${isActive ? 'stroke-[2.5]' : 'stroke-[1.75]'}`} />
             <span>{item.label}</span>
           </Link>
         );

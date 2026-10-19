@@ -4,176 +4,164 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  Flame,
+  Bookmark,
   Users,
-  Compass,
-  Rocket,
-  Archive,
-  CalendarDays,
-  MessageSquare,
-  ShieldCheck,
   Award,
+  ShieldCheck,
+  Hash,
+  Calendar,
   Sparkles,
+  ChevronRight,
+  ExternalLink,
 } from 'lucide-react';
 import { useCampus } from '@/context/CampusContext';
+import { COLLEGE_CONFIG } from '@/lib/supabase';
 
 export const LeftSidebar: React.FC = () => {
   const pathname = usePathname();
-  const { currentUser } = useCampus();
+  const { currentUser, setActiveChannel } = useCampus();
 
-  const navItems = [
-    {
-      href: '/',
-      label: 'Campus Pulse',
-      subtitle: 'Live Campus Feed',
-      icon: Flame,
-      badge: 'Live',
-      badgeColor: 'bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20',
-    },
-    {
-      href: '/directory',
-      label: 'Student Directory',
-      subtitle: '1st–4th Year Network',
-      icon: Users,
-    },
-    {
-      href: '/bridge',
-      label: 'Senior-Junior Bridge',
-      subtitle: 'Mentorship & Placement',
-      icon: Compass,
-      badge: 'Hot',
-      badgeColor: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20',
-    },
-    {
-      href: '/teams',
-      label: 'Team & Hackathons',
-      subtitle: 'Build Together Board',
-      icon: Rocket,
-    },
-    {
-      href: '/vault',
-      label: 'Academic & Gear Vault',
-      subtitle: 'PYQs, Notes & Books',
-      icon: Archive,
-    },
-    {
-      href: '/clubs',
-      label: 'Clubs & Events',
-      subtitle: 'Societies & Lost/Found',
-      icon: CalendarDays,
-    },
-    {
-      href: '/messages',
-      label: 'Batch Channels',
-      subtitle: 'Real-Time Year Chat',
-      icon: MessageSquare,
-      badge: 'Active',
-      badgeColor: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20',
-    },
+  const recentRooms = [
+    { id: '3rd-year-internships', label: '3rd-year-internships' },
+    { id: '1st-year-freshers', label: '1st-year-freshers' },
+    { id: 'competitive-programming', label: 'competitive-programming' },
+    { id: '2nd-year-hub', label: '2nd-year-hub' },
   ];
 
   return (
-    <aside className="w-64 flex-shrink-0 hidden md:block">
-      <div className="sticky top-20 space-y-4">
+    <aside className="w-56 lg:w-60 flex-shrink-0 hidden md:block space-y-2.5">
+      
+      {/* 1. LinkedIn-style Profile Card */}
+      <div className="rounded-lg border border-border bg-card overflow-hidden shadow-xs text-center">
         
-        {/* Navigation List */}
-        <div className="rounded-2xl border border-border bg-card p-3 shadow-sm">
-          <div className="px-3 py-2 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-            Campus Hub
-          </div>
+        {/* Banner Cover */}
+        <div className="h-14 bg-gradient-to-r from-[#0a66c2]/80 via-indigo-600 to-[#004182] relative" />
 
-          <nav className="space-y-1">
-            {navItems.map((item) => {
-              const isActive = pathname === item.href;
-              const Icon = item.icon;
-
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`group flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
-                    isActive
-                      ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
-                      : 'text-muted-foreground hover:bg-muted hover:text-foreground'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <Icon
-                      className={`h-4 w-4 transition-transform group-hover:scale-110 ${
-                        isActive ? 'text-white' : 'text-muted-foreground group-hover:text-indigo-600 dark:group-hover:text-indigo-400'
-                      }`}
-                    />
-                    <div>
-                      <div className={`leading-none ${isActive ? 'text-white font-semibold' : 'text-foreground'}`}>
-                        {item.label}
-                      </div>
-                      <div
-                        className={`text-[10px] mt-0.5 leading-none ${
-                          isActive ? 'text-indigo-100' : 'text-muted-foreground'
-                        }`}
-                      >
-                        {item.subtitle}
-                      </div>
-                    </div>
-                  </div>
-
-                  {item.badge && !isActive && (
-                    <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full ${item.badgeColor}`}>
-                      {item.badge}
-                    </span>
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
+        {/* Circular Avatar with -mt overlap */}
+        <div className="relative -mt-9 flex justify-center">
+          <Link href={`/directory?student=${currentUser.id}`}>
+            <img
+              src={currentUser.avatar}
+              alt={currentUser.name}
+              className="h-16 w-16 rounded-full object-cover ring-2 ring-card shadow-sm hover:opacity-95 transition-opacity"
+            />
+          </Link>
         </div>
 
-        {/* Current Student Profile Snapshot Card */}
-        <div className="rounded-2xl border border-border bg-gradient-to-b from-card to-muted/20 p-4 shadow-sm relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full blur-2xl pointer-events-none" />
-          
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <img
-                src={currentUser.avatar}
-                alt={currentUser.name}
-                className="h-11 w-11 rounded-full object-cover ring-2 ring-indigo-500/30"
-              />
-              <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-emerald-500 ring-2 ring-background" />
-            </div>
-
-            <div className="overflow-hidden">
-              <h4 className="font-bold text-sm text-foreground truncate">{currentUser.name}</h4>
-              <p className="text-xs text-muted-foreground truncate">{currentUser.headline}</p>
-            </div>
+        {/* Name & Headline */}
+        <div className="p-3 pt-2">
+          <Link
+            href={`/directory?student=${currentUser.id}`}
+            className="font-bold text-sm text-foreground hover:underline block leading-tight"
+          >
+            {currentUser.name}
+          </Link>
+          <p className="text-[11px] text-muted-foreground mt-1 line-clamp-2 leading-relaxed">
+            {currentUser.headline}
+          </p>
+          <div className="mt-1 text-[11px] font-semibold text-[#0a66c2] dark:text-[#70b5f9]">
+            {currentUser.year} • {currentUser.branch}
           </div>
+        </div>
 
-          <div className="mt-3 grid grid-cols-2 gap-2 text-center">
-            <div className="rounded-lg bg-muted/60 p-2">
-              <div className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Batch</div>
-              <div className="text-xs font-bold text-foreground mt-0.5">{currentUser.year}</div>
-            </div>
-            <div className="rounded-lg bg-indigo-500/10 border border-indigo-500/20 p-2">
-              <div className="text-[10px] font-medium text-indigo-600 dark:text-indigo-400 uppercase tracking-wider flex items-center justify-center gap-0.5">
-                <Award className="h-2.5 w-2.5" />
-                <span>Karma</span>
-              </div>
-              <div className="text-xs font-bold text-indigo-600 dark:text-indigo-400 mt-0.5">
-                {currentUser.karmaPoints} pts
-              </div>
-            </div>
-          </div>
+        {/* LinkedIn-style Analytics / Stats Rows */}
+        <div className="border-t border-border py-2 text-left text-xs">
+          <Link
+            href="/directory"
+            className="flex items-center justify-between px-3 py-1.5 hover:bg-muted/50 transition-colors"
+          >
+            <span className="text-[11px] text-muted-foreground">Batch Reach</span>
+            <span className="font-bold text-foreground text-xs">340</span>
+          </Link>
 
-          <div className="mt-3 pt-3 border-t border-border flex items-center justify-between text-[11px] text-muted-foreground">
-            <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-medium">
-              <ShieldCheck className="h-3.5 w-3.5" />
-              <span>Institutional ID</span>
+          <Link
+            href="/bridge"
+            className="flex items-center justify-between px-3 py-1.5 hover:bg-muted/50 transition-colors"
+          >
+            <div className="flex items-center gap-1">
+              <span className="text-[11px] text-muted-foreground">Campus Karma</span>
+            </div>
+            <span className="font-bold text-[#0a66c2] dark:text-[#70b5f9] text-xs">
+              {currentUser.karmaPoints} pts
             </span>
-            <span className="font-semibold text-foreground">{currentUser.branch}</span>
+          </Link>
+
+          <div className="flex items-center justify-between px-3 py-1.5 text-muted-foreground">
+            <span className="text-[11px]">Institutional ID</span>
+            <span className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-1 rounded">
+              Verified
+            </span>
           </div>
+        </div>
+
+        {/* My Saved Items Row */}
+        <div className="border-t border-border p-2.5 text-left">
+          <Link
+            href="/vault"
+            className="flex items-center gap-2 text-xs font-semibold text-foreground hover:text-[#0a66c2] transition-colors"
+          >
+            <Bookmark className="h-3.5 w-3.5 text-muted-foreground" />
+            <span className="text-[11px]">My Saved PYQs & Notes</span>
+          </Link>
         </div>
 
       </div>
+
+      {/* 2. LinkedIn-style "Recent & Groups" Sticky Card */}
+      <div className="sticky top-16 rounded-lg border border-border bg-card p-3 shadow-xs space-y-3 text-left">
+        
+        {/* Recent Batch Channels */}
+        <div>
+          <div className="text-[11px] font-semibold text-muted-foreground mb-1.5">Recent</div>
+          <div className="space-y-1">
+            {recentRooms.map((room) => (
+              <Link
+                key={room.id}
+                href="/messages"
+                onClick={() => setActiveChannel(room.id)}
+                className="flex items-center gap-2 py-1 text-xs text-muted-foreground hover:text-foreground transition-colors group truncate"
+              >
+                <Hash className="h-3.5 w-3.5 shrink-0 text-muted-foreground group-hover:text-foreground" />
+                <span className="truncate text-[11px]">{room.label}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Groups & Societies */}
+        <div className="pt-2 border-t border-border">
+          <Link
+            href="/clubs"
+            className="text-[11px] font-bold text-[#0a66c2] dark:text-[#70b5f9] hover:underline flex items-center justify-between"
+          >
+            <span>Campus Societies</span>
+            <span className="text-muted-foreground text-[10px] font-normal">4</span>
+          </Link>
+          <div className="mt-1 space-y-1 text-xs text-muted-foreground">
+            <Link href="/clubs" className="block text-[11px] hover:text-foreground truncate py-0.5">
+              • Turing Coding Club
+            </Link>
+            <Link href="/clubs" className="block text-[11px] hover:text-foreground truncate py-0.5">
+              • Robocrafters Society
+            </Link>
+            <Link href="/clubs" className="block text-[11px] hover:text-foreground truncate py-0.5">
+              • E-Cell Entrepreneurship
+            </Link>
+          </div>
+        </div>
+
+        {/* Discover More Footer Button */}
+        <div className="pt-2 border-t border-border text-center">
+          <Link
+            href="/directory"
+            className="text-[11px] font-bold text-muted-foreground hover:text-[#0a66c2] transition-colors block py-0.5"
+          >
+            Discover More Peers →
+          </Link>
+        </div>
+
+      </div>
+
     </aside>
   );
 };

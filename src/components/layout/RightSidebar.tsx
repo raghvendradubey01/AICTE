@@ -3,231 +3,153 @@
 import React from 'react';
 import Link from 'next/link';
 import {
-  Calendar,
-  Rocket,
-  Trophy,
-  Users,
+  Info,
+  ChevronDown,
+  Plus,
   ArrowRight,
-  ExternalLink,
   Flame,
+  ShieldCheck,
   CheckCircle2,
+  ExternalLink,
 } from 'lucide-react';
 import { useCampus } from '@/context/CampusContext';
 import { StudentYear } from '@/types';
+import { COLLEGE_CONFIG } from '@/lib/supabase';
 
 export const RightSidebar: React.FC = () => {
-  const { students, teams, clubs } = useCampus();
+  const { students, teams, showToast } = useCampus();
 
-  // Top Senior Contributors ranked by karma
-  const topSeniors = [...students]
-    .filter((s) => s.year === '3rd Year' || s.year === '4th Year')
-    .sort((a, b) => b.karmaPoints - a.karmaPoints)
+  const campusNews = [
+    { title: 'Microsoft Summer Intern Drive Open', time: '4h ago', readers: '382 readers' },
+    { title: 'Smart India Hackathon Squads Forming', time: '1d ago', readers: '540 readers' },
+    { title: 'Casio 991EX & Drafter in Gear Vault', time: '2d ago', readers: '142 readers' },
+    { title: 'Google SWE-1 Interview Debrief Live', time: '2d ago', readers: '610 readers' },
+    { title: 'Turing Club Speed Coding Sprint', time: '3d ago', readers: '280 readers' },
+  ];
+
+  // Top Senior Mentors
+  const topMentors = students
+    .filter((s) => s.isMentor && (s.year === '3rd Year' || s.year === '4th Year'))
     .slice(0, 3);
 
-  // Trending Hackathon Teams (open teams)
-  const trendingTeams = teams.filter((t) => t.status === 'Open').slice(0, 2);
-
-  const yearPills: StudentYear[] = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
+  const batches: StudentYear[] = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
 
   return (
-    <aside className="w-80 flex-shrink-0 hidden xl:block">
-      <div className="sticky top-20 space-y-4">
-        
-        {/* Quick Batch Year Filter Widget */}
-        <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
-              <Users className="h-3.5 w-3.5 text-indigo-500" />
-              <span>Explore by Batch</span>
-            </h3>
-            <Link
-              href="/directory"
-              className="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
-            >
-              All (4)
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2">
-            {yearPills.map((yr) => (
-              <Link
-                key={yr}
-                href={`/directory?year=${encodeURIComponent(yr)}`}
-                className="flex items-center justify-between p-2 rounded-xl border border-border/80 bg-muted/40 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 hover:border-indigo-500/30 transition-all text-xs group"
-              >
-                <span className="font-semibold text-foreground group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
-                  {yr}
-                </span>
-                <span className="text-[10px] text-muted-foreground bg-card px-1.5 py-0.5 rounded-full border border-border">
-                  {students.filter((s) => s.year === yr).length}
-                </span>
-              </Link>
-            ))}
-          </div>
+    <aside className="w-72 lg:w-80 flex-shrink-0 hidden xl:block space-y-2.5">
+      
+      {/* 1. LinkedIn News Style Card */}
+      <div className="rounded-lg border border-border bg-card p-3.5 shadow-xs text-left">
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="font-bold text-sm text-foreground">Campus News</h3>
+          <Info className="h-3.5 w-3.5 text-muted-foreground cursor-pointer" />
         </div>
+        <p className="text-[11px] text-muted-foreground mb-3">Top campus updates & placement buzz</p>
 
-        {/* Top Senior Contributors Leaderboard */}
-        <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-amber-500/10 text-amber-500">
-                <Trophy className="h-4 w-4" />
-              </div>
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                  Senior Leaderboard
-                </h3>
-                <p className="text-[11px] text-muted-foreground">Mentorship & Peer Karma</p>
-              </div>
-            </div>
+        <div className="space-y-3">
+          {campusNews.map((news, idx) => (
             <Link
+              key={idx}
               href="/bridge"
-              className="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
+              className="group block hover:bg-muted/40 -mx-2 px-2 py-1 rounded transition-colors"
             >
-              Bridge
-            </Link>
-          </div>
-
-          <div className="space-y-2.5">
-            {topSeniors.map((senior, idx) => (
-              <div
-                key={senior.id}
-                className="flex items-center justify-between p-2 rounded-xl bg-muted/30 hover:bg-muted/60 transition-colors"
-              >
-                <div className="flex items-center gap-2.5">
-                  <div className="relative">
-                    <img
-                      src={senior.avatar}
-                      alt={senior.name}
-                      className="h-8 w-8 rounded-full object-cover ring-1 ring-border"
-                    />
-                    <span
-                      className={`absolute -top-1 -left-1 flex h-4 w-4 items-center justify-center rounded-full text-[9px] font-black text-white ${
-                        idx === 0 ? 'bg-amber-500 ring-2 ring-background' : idx === 1 ? 'bg-slate-400' : 'bg-amber-700'
-                      }`}
-                    >
-                      {idx + 1}
-                    </span>
-                  </div>
-                  <div>
-                    <div className="font-semibold text-xs text-foreground flex items-center gap-1">
-                      <span>{senior.name}</span>
-                      <CheckCircle2 className="h-3 w-3 text-indigo-500" />
-                    </div>
-                    <div className="text-[10px] text-muted-foreground">
-                      {senior.year} • {senior.branch}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="text-right">
-                  <span className="inline-flex items-center gap-0.5 rounded-full bg-indigo-500/10 px-2 py-0.5 text-[11px] font-bold text-indigo-600 dark:text-indigo-400">
-                    <Flame className="h-3 w-3 text-amber-500" />
-                    {senior.karmaPoints}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Trending Hackathon Teams */}
-        <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-500">
-                <Rocket className="h-4 w-4" />
-              </div>
-              <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                Trending Teams
-              </h3>
-            </div>
-            <Link
-              href="/teams"
-              className="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-0.5"
-            >
-              <span>View All</span>
-              <ArrowRight className="h-3 w-3" />
-            </Link>
-          </div>
-
-          <div className="space-y-3">
-            {trendingTeams.map((team) => (
-              <div
-                key={team.id}
-                className="p-3 rounded-xl border border-border/70 bg-muted/20 hover:border-indigo-500/40 transition-all space-y-2"
-              >
-                <div className="flex items-start justify-between gap-2">
-                  <h4 className="text-xs font-bold text-foreground line-clamp-1">
-                    {team.title}
+              <div className="flex items-start gap-2">
+                <span className="text-foreground font-black text-xs leading-tight">•</span>
+                <div>
+                  <h4 className="font-semibold text-xs text-foreground group-hover:text-[#0a66c2] transition-colors leading-snug">
+                    {news.title}
                   </h4>
-                  <span className="shrink-0 text-[10px] font-bold bg-indigo-100 dark:bg-indigo-950/70 text-indigo-700 dark:text-indigo-300 px-2 py-0.5 rounded-full">
-                    {team.filledSlots}/{team.totalSlots} Slots
-                  </span>
-                </div>
-
-                <p className="text-[11px] text-muted-foreground line-clamp-2">
-                  {team.eventName} • {team.eventType}
-                </p>
-
-                <div className="flex flex-wrap gap-1">
-                  {team.rolesNeeded.slice(0, 2).map((role, i) => (
-                    <span
-                      key={i}
-                      className="text-[10px] bg-background px-1.5 py-0.5 rounded border border-border text-foreground"
-                    >
-                      {role}
-                    </span>
-                  ))}
+                  <div className="text-[10px] text-muted-foreground mt-0.5">
+                    {news.time} • {news.readers}
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Upcoming Campus Events */}
-        <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-500">
-                <Calendar className="h-4 w-4" />
-              </div>
-              <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                Upcoming Events
-              </h3>
-            </div>
-            <Link
-              href="/clubs"
-              className="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
-            >
-              Clubs
             </Link>
-          </div>
+          ))}
+        </div>
+      </div>
 
-          <div className="space-y-2.5">
-            {clubs.slice(0, 2).map((club) => (
-              <div
-                key={club.id}
-                className="p-2.5 rounded-xl bg-muted/30 border border-border/60 text-xs space-y-1"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold text-foreground truncate pr-2">
-                    {club.upcomingEvent.title}
-                  </span>
-                  <span className="text-[10px] font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 px-1.5 py-0.5 rounded">
-                    {club.upcomingEvent.type}
-                  </span>
-                </div>
-                <div className="text-[11px] text-muted-foreground flex items-center justify-between">
-                  <span>{club.upcomingEvent.date}</span>
-                  <span>{club.upcomingEvent.location}</span>
-                </div>
-              </div>
-            ))}
-          </div>
+      {/* 2. "Add to your network" / Senior Mentors Card */}
+      <div className="rounded-lg border border-border bg-card p-3.5 shadow-xs text-left">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="font-bold text-sm text-foreground">Recommended Mentors</h3>
+          <Link
+            href="/bridge"
+            className="text-xs font-semibold text-[#0a66c2] dark:text-[#70b5f9] hover:underline"
+          >
+            View all
+          </Link>
         </div>
 
+        <div className="space-y-3.5">
+          {topMentors.map((mentor) => (
+            <div key={mentor.id} className="flex items-start gap-2.5">
+              <Link href={`/directory?student=${mentor.id}`}>
+                <img
+                  src={mentor.avatar}
+                  alt={mentor.name}
+                  className="h-10 w-10 rounded-full object-cover ring-1 ring-border mt-0.5"
+                />
+              </Link>
+              <div className="flex-1 min-w-0">
+                <Link
+                  href={`/directory?student=${mentor.id}`}
+                  className="font-bold text-xs text-foreground hover:underline truncate block"
+                >
+                  {mentor.name}
+                </Link>
+                <p className="text-[10px] text-muted-foreground truncate leading-tight">
+                  {mentor.headline}
+                </p>
+                <div className="text-[10px] font-semibold text-[#0a66c2] dark:text-[#70b5f9] mt-0.5">
+                  {mentor.year} • {mentor.branch}
+                </div>
+
+                <div className="mt-2">
+                  <Link
+                    href={`/directory?student=${mentor.id}`}
+                    className="inline-flex items-center gap-1 rounded-full border border-foreground/60 dark:border-foreground/40 hover:border-foreground px-3 py-0.5 text-xs font-bold text-foreground hover:bg-muted/60 transition-colors"
+                  >
+                    <Plus className="h-3 w-3" />
+                    <span>Connect</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
+
+      {/* 3. Quick Batch Pills */}
+      <div className="rounded-lg border border-border bg-card p-3 shadow-xs">
+        <div className="text-xs font-bold text-foreground mb-2">Explore Batches</div>
+        <div className="grid grid-cols-2 gap-1.5">
+          {batches.map((b) => (
+            <Link
+              key={b}
+              href={`/directory?year=${encodeURIComponent(b)}`}
+              className="text-center py-1 px-2 rounded-md bg-muted/50 hover:bg-muted text-[11px] font-semibold text-foreground transition-colors"
+            >
+              {b}
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* 4. LinkedIn-style Footer Links */}
+      <footer className="px-2 pt-2 text-center text-[11px] text-muted-foreground leading-relaxed">
+        <div className="flex flex-wrap justify-center gap-x-3 gap-y-1">
+          <Link href="/directory" className="hover:underline">About</Link>
+          <Link href="/bridge" className="hover:underline">Placement Guide</Link>
+          <Link href="/vault" className="hover:underline">PYQs & Gear</Link>
+          <Link href="/clubs" className="hover:underline">Campus Clubs</Link>
+          <Link href="/messages" className="hover:underline">Channels</Link>
+        </div>
+        <div className="mt-2 font-semibold text-foreground flex items-center justify-center gap-1 text-[11px]">
+          <span className="font-extrabold text-[#0a66c2]">CampusConnect</span>
+          <span>© 2026 {COLLEGE_CONFIG.code}</span>
+        </div>
+      </footer>
+
     </aside>
   );
 };

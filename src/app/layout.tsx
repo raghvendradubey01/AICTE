@@ -8,7 +8,7 @@ import { MobileNav } from '@/components/layout/MobileNav';
 import { ToastNotification } from '@/components/ui/ToastNotification';
 
 export const metadata: Metadata = {
-  title: 'CampusConnect | Exclusive Intra-College Network',
+  title: 'CampusConnect | Intra-College Professional & Mentorship Network',
   description:
     'Exclusive intra-college social, academic, and mentorship network connecting 1st, 2nd, 3rd, and 4th-year students.',
 };
@@ -25,17 +25,17 @@ export default function RootLayout({
           <div className="relative flex min-h-screen flex-col">
             <Navbar />
             
-            <div className="flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 py-6 pb-20 md:pb-8">
-              <div className="flex items-start gap-6">
-                {/* 1. Left Sidebar Navigation */}
+            <div className="flex-1 mx-auto w-full max-w-6xl px-3 sm:px-4 py-4 pb-20 md:pb-8">
+              <div className="flex items-start gap-4 lg:gap-5">
+                {/* 1. Left Sidebar: Profile & Groups Card */}
                 <LeftSidebar />
 
-                {/* 2. Center Dynamic Route Content */}
+                {/* 2. Center Feed & Active Route */}
                 <main className="flex-1 min-w-0">
                   {children}
                 </main>
 
-                {/* 3. Right Sidebar Utilities */}
+                {/* 3. Right Sidebar: Campus News & Recommendations */}
                 <RightSidebar />
               </div>
             </div>
