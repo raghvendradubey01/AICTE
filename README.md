@@ -1,7 +1,7 @@
 # AICTE Approval Monitor
-### Autonomous Approval Tracking and Alerting Reminder System
+### Autonomous Tracking and Alerting Reminder System
 
-> **Repository Description**: *Autonomous tracking and alerting reminder system for institutional AICTE approval processes.*
+> **Original Description**: *Autonomous tracking and alerting remainder system for institutional AICTE approval processes.*
 
 [![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-18-blue?style=flat&logo=react)](https://react.dev/)
