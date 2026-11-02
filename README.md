@@ -1,162 +1,163 @@
-<div align="center">
+# AICTE Approval Monitor
+### Autonomous Approval Tracking and Alerting Reminder System
 
-# 🎓 CampusConnect
-### *The Exclusive Intra-College Social, Academic & Mentorship Network*
-**Connecting 1st, 2nd, 3rd, and 4th-Year Students Within Your Campus**
+> **Repository Description**: *Autonomous tracking and alerting reminder system for institutional AICTE approval processes.*
 
 [![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-18-blue?style=flat&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38bdf8?style=flat&logo=tailwindcss)](https://tailwindcss.com/)
-[![Supabase](https://img.shields.io/badge/Supabase-Ready-3ECF8E?style=flat&logo=supabase)](https://supabase.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-
-</div>
+[![Recharts](https://img.shields.io/badge/Recharts-Analytics-22c55e?style=flat)](https://recharts.org/)
+[![Web Crypto](https://img.shields.io/badge/Web%20Crypto-SHA--256-indigo?style=flat)](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API)
+[![Storage](https://img.shields.io/badge/Storage-Browser%20LocalStorage%20(No%20Backend)-amber?style=flat)]()
 
 ---
 
-## 🌟 Vision & Overview
+## 🏛️ Overview
 
-Inspired by the original Harvard **"TheFacebook"** concept (where exclusivity to the college community sparked authentic connections), **CampusConnect** is a modern, student-first platform designed exclusively for your college campus. 
+**AICTE Approval Monitor** is a specialized web application engineered to route, track, and monitor AICTE (All India Council for Technical Education) institutional approval applications according to the **Approval Process Handbook (APH 2026-27)**.
 
-Junior students often find it daunting to approach final-year seniors for project advice, placement materials, or hackathon teams. Meanwhile, seniors graduate each year with battle-tested interview logs, lab manuals, and dorm gear that never reach the incoming batches.
+Designed with a clean, institutional aesthetic (white background, crisp AICTE blue accents, rounded cards, and plain English labels), the system provides an autonomous deadline reminder engine while strictly maintaining that **all regulatory decisions are made by human officials**.
 
-**CampusConnect** bridges this generational campus divide by providing an authentic intra-college ecosystem gated by verified institutional emails (`.ac.in` / `.edu`).
-
----
-
-## 🚀 Key Modules & Capabilities
-
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                        CAMPUSCONNECT ECOSYSTEM                         │
-├────────────────────┬─────────────────────┬─────────────────────────────┤
-│ 1. Student Network │ 2. Senior Bridge    │ 3. Build Board & Vault      │
-├────────────────────┼─────────────────────┼─────────────────────────────┤
-│ • 1st-4th Year Dir │ • Ask a Senior Q&A  │ • Hackathon & Project Finder│
-│ • Branch & Hostels │ • Placement Logs    │ • Notes & PYQ Vault (1-8 s) │
-│ • Mentor Badges    │ • 1-on-1 Mentorship │ • Book & Gear Marketplace   │
-│ • Karma Leaderboard│ • Verified Badges   │ • Batch Channels & Realtime │
-└────────────────────┴─────────────────────┴─────────────────────────────┘
-```
-
-### 1. 👥 The 1st–4th Year Directory (`/directory`)
-- **Institution Gated:** Validated college email verification badge.
-- **Detailed Student Profile Cards:** Batch year badge (`1st Year - Fresher` to `4th Year - Final`), Branch (`CSE`, `ECE`, `ME`, `Civil`, `EE`, `IT`), Residence status (`Hostel` / `Day Scholar`), Open-to-Mentor toggle, Tech/Creative skill tags, and GitHub/LinkedIn/Portfolio links.
-- **Instant Multi-Filter Bar:** Filter peers and seniors by Year, Branch, Skills, Hostel vs. Day Scholar, or Mentorship status.
-
-### 2. 🌉 Senior-Junior Bridge (`/bridge`)
-- **"Ask a Senior" Forum:** Dedicated Q&A where freshers and sophomores ask questions about course electives, GPA survival, research labs, or internships, answered with "Verified Senior" badges.
-- **Placement & Internship Chronicles:** Real interview debriefs from Google, Microsoft, Amazon, Texas Instruments, Zomato, Goldman Sachs, etc. with round breakdowns, problem statements, and prep roadmaps.
-- **1-on-1 Mentorship Directory:** Book mock interviews, resume critiques, and project guidance with experienced 3rd and 4th-year seniors.
-
-### 3. ⚡ Team & Hackathon Finder (`/teams`)
-- **"Build Together" Pitch Board:** Discover or post hackathon teams (Smart India Hackathon, EthIndia, Major Capstone, Campus Startups).
-- **Slot Tracking:** Visible slots (`2/4 Filled`) and required skill roles.
-- **One-Click Apply:** Juniors and peers can apply with their CampusConnect profile card and custom pitch note.
-
-### 4. 📚 Academic & Gear Vault (`/vault`)
-- **Notes & PYQ Repository:** Filter through semesters 1–8, branch, and category (PYQs, Handwritten Notes, Lab Manuals, Syllabus).
-- **Campus Book & Gear Exchange:** Dorm clearinghouse where passing-out seniors donate or sell engineering drafters, scientific calculators (Casio 991EX), lab coats, bicycles, and textbooks.
-
-### 5. 💬 Batch Channels & Direct Messages (`/messages`)
-- Auto-organized channels (`#1st-year-freshers`, `#2nd-year-hub`, `#3rd-year-internships`, `#4th-year-placements`, `#competitive-programming`, `#gate-cat-prep`).
-- Real-time chat with code formatting, role badges, and direct messaging.
-
-### 6. 🌐 Campus Pulse & Clubs Hub (`/`, `/clubs`)
-- Campus-wide feed with filters for `All Campus`, `My Year`, and `My Department`.
-- Directory of student societies (Coding Club, Robotics, E-Cell, Literary Society) with audition dates and lost & found notices.
+The application runs entirely inside the browser using **HTML5 LocalStorage** with zero server or database dependencies.
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## ✨ Key Capabilities & Modules
 
-- **Frontend & App Architecture:** [Next.js 14](https://nextjs.org/) (App Router, React 18, TypeScript)
-- **Styling & Components:** [Tailwind CSS](https://tailwindcss.com/), [Lucide React](https://lucide.dev/)
-- **State Management & Mock Architecture:** Built-in **Rich Mock Fallback Provider** stored locally so contributors can run the app with 100% functionality out of the box with zero external dependencies.
-- **Backend & Database:** [Supabase](https://supabase.com/) (PostgreSQL schema, Row Level Security, Auth policies, and Realtime replication).
+### 1. 👥 Multi-Persona Role Switcher
+Instantly toggle between the four official regulatory personas via the top navigation bar:
+- **Institution**: View applicant college progress meters, upload compliance renewal documents, and check next required actions.
+- **Regional Officer**: Review regional scrutiny queues, verify affidavits, approve or return applications with mandatory reasons.
+- **Bureau Officer**: Supervisory national overview across all 5 regions, monitoring overdue cases and reviewing supervisory escalations.
+- **EVC/SAC Committee**: Manage scheduled physical visits, geo-tagged inspection streams, and Standing Hearing Committee hearings.
+
+### 2. ⏱️ Centralized Deadline Engine & Demo Clock
+- **SLA Calculation Formula**:
+  $$\text{Due Date} = \text{Stage Start Date} + \text{Stage Statutory SLA Days}$$
+- **Status Classification**:
+  - 🟢 **On track**: More than 7 days remaining
+  - 🟡 **Due soon**: 7 days or fewer remaining
+  - 🔴 **Overdue**: Due date has passed
+- **Simulated Demo Clock**: Top-bar controls (`+1 day`, `+7 days`, `+30 days`, `Reset`) allow instant forward-simulation of time. Every deadline, expiry date, notification, and chart calculation dynamically derives from this simulated clock.
+
+### 3. 📋 Applications Workflow & Human-in-the-Loop Routing
+- 25 sample institutions across **North**, **South**, **East**, **West**, and **Central** regions.
+- Four official workflow routes (`Only Scrutiny`, `Scrutiny + EVC`, `EVC + SAC/SHC`, `Only EVC`).
+- Searchable table with instant multi-filtering (Region, Stage, Status, SLA Deadline).
+- Interactive **Stage Timeline Drawer** displaying completed, current, and upcoming stages.
+- Regulatory action buttons:
+  - **"Approve and move to next stage"**
+  - **"Return with reason"** *(Mandatory deficiency justification)*
+
+### 4. 🔔 Automated Milestone Notifications & Escalation Engine
+- Milestone reminders triggered at **30 days**, **7 days**, and **1 day** before deadlines, and again upon breach.
+- **Supervisory Escalation**: If a case is overdue by more than **3 days**, it is automatically escalated to the Bureau Officer with a dashboard escalation banner: *"X cases escalated since yesterday"*.
+- Notification bell dropdown with unread badge counter and simulated email indicator: `"Email sent (simulated)"`.
+- Intelligent deduplication prevents repeat triggers for the same case and milestone.
+
+### 5. 📂 Undertakings and Documents Registry
+- Tracks essential statutory records (Land Leases, Fire Safety Certificates, Affiliation Letters, Anti-Ragging Undertakings).
+- Expiry status (`Valid`, `Expiring in 30 days`, `Expired`) driven by the deadline engine.
+- Role-based document actions:
+  - **Institution**: Click *"Upload renewal"* (stores file metadata locally).
+  - **Officer**: Click *"Verify"* to stamp regulatory compliance.
+
+### 6. 🔒 Cryptographic Tamper-Evident Audit Log (SHA-256)
+- Every user action (approve, return, escalate, upload, verify, role switch, SLA configuration) logs timestamp, role, action, case ID, and details.
+- Implements a cryptographic **SHA-256 hash chain** via the browser **Web Crypto API** (`window.crypto.subtle`), where each entry contains:
+  $$\text{Hash}_n = \text{SHA-256}(\text{Content}_n + \text{Hash}_{n-1})$$
+- **"Verify log integrity"**: Validates the cryptographic seal across all entries and reports *"Log is intact"* or pinpoints the first compromised block.
+- **"Tamper test"**: Intentionally mutates an old record to demonstrate real-time cryptographic failure detection.
+
+### 7. 📊 Reports & Analytics
+- **Region-Wise Pendency and Ageing**: Recharts `ComposedChart` showing pending vs. completed volume alongside average days elapsed.
+- **Stage-Wise Bottleneck Analysis**: Recharts `BarChart` comparing active caseload and average turnaround against statutory SLA targets.
+- **10 Oldest Pending Cases**: Priority list ranked strictly by days pending.
+- **"Download CSV"**: One-click RFC 4180 compliant export of pending cases.
+
+### 8. ⚙️ Settings & Dynamic SLA Configuration (Rules as Configuration)
+- Edit statutory SLA days per stage without code modifications:
+  - **Scrutiny**: Default 15 days *(Regional Officer)*
+  - **EVC**: Default 10 days *(EVC/SAC Committee)*
+  - **SAC/SHC**: Default 7 days *(EVC/SAC Committee)*
+- Updating SLA limits immediately cascades across all active cases, dashboards, and bottleneck charts.
+- **"Reset Demo Data"**: Restores all 25 sample records, documents, demo clock, notifications, and cryptographic hash chains to initial statutory defaults.
 
 ---
 
-## ⚡ Quickstart Guide (Local Development)
+## 🛠️ Tech Stack
 
-### 1. Clone the repository
+- **Framework**: [Next.js 14](https://nextjs.org/) (App Router, React 18, TypeScript)
+- **Styling**: [Tailwind CSS v3.4](https://tailwindcss.com/)
+- **Charts & Data Visualization**: [Recharts](https://recharts.org/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Cryptography**: Native Web Crypto API (`window.crypto.subtle`)
+- **Storage**: Browser HTML5 LocalStorage
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18.x or later
+- npm or yarn
+
+### Installation
 ```bash
-git clone https://github.com/your-college/campus-connect.git
-cd campus-connect
-```
+# Clone the repository
+git clone https://github.com/raghvendradubey01/AICTE.git
 
-### 2. Install dependencies
-```bash
+# Navigate to project directory
+cd AICTE
+
+# Install dependencies
 npm install
-```
 
-### 3. Run the development server
-```bash
+# Start the local development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-> [!TIP]
-> **Zero-Config Contributor Mode:** The app includes a rich initial mock dataset covering 1st through 4th-year students, placement chronicles, PYQs, and hackathon cards. You don't need Supabase credentials to explore or build new UI features!
-
-### 4. (Optional) Connect Your Own Supabase Instance
-1. Copy `.env.example` to `.env.local`:
-   ```bash
-   cp .env.example .env.local
-   ```
-2. Create a new Supabase project at [supabase.com](https://supabase.com).
-3. Run the SQL script located in `supabase/schema.sql` in your Supabase SQL Editor.
-4. Populate `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in `.env.local`.
+Open **[http://localhost:3000](http://localhost:3000)** in your browser to explore the portal.
 
 ---
 
-## 📂 Project Structure
+## 📁 Project Structure
 
 ```
-campus-connect/
-├── .github/
-│   ├── ISSUE_TEMPLATE/
-│   │   ├── bug_report.md
-│   │   └── feature_request.md
-│   └── workflows/
-│       └── ci.yml
-├── public/                 # Static assets & icons
+├── rules.js                           # Core statutory workflow rules & SLA formulas
 ├── src/
-│   ├── app/                # Next.js App Router pages
-│   │   ├── page.tsx        # Campus Pulse (Feed)
-│   │   ├── layout.tsx      # 3-Column Shell (Sidebar, TopNav, RightBar)
-│   │   ├── directory/      # Student Directory & Mentorship filter
-│   │   ├── bridge/         # Q&A Forum & Placement Chronicles
-│   │   ├── teams/          # Hackathon & Major Project Finder
-│   │   ├── vault/          # PYQs, Notes & Dorm Gear Marketplace
-│   │   ├── clubs/          # Societies & Lost/Found Hub
-│   │   └── messages/       # Batch Channels & Direct Messages
-│   ├── components/         # Modular UI & dashboard components
-│   │   ├── layout/         # LeftSidebar, TopNavbar, RightSidebar
-│   │   ├── modals/         # Modals for Q&A, Teams, Gear, Onboarding
-│   │   └── ui/             # Badges, Tabs, Dialogs, Cards
-│   ├── context/            # CampusAppContext & Mock State Store
-│   ├── data/               # Realistic Mock Seed Dataset
-│   ├── lib/                # Supabase client & utility functions
-│   └── types/              # Comprehensive TypeScript interfaces
-├── supabase/
-│   └── schema.sql          # Complete PostgreSQL schema & RLS rules
-├── CONTRIBUTING.md         # Guidelines for college open-source contributors
-├── CODE_OF_CONDUCT.md     # Contributor Covenant Code of Conduct
-├── SECURITY.md             # Security disclosures
-└── LICENSE                 # MIT License
+│   ├── app/
+│   │   ├── page.tsx                   # Role-adaptive Dashboard
+│   │   ├── applications/              # Searchable applications table & detail drawer
+│   │   ├── evc-queue/                 # EVC inspection hearing queue
+│   │   ├── documents/                 # Undertakings & document compliance registry
+│   │   ├── reports/                   # Pendency, bottleneck charts & CSV download
+│   │   ├── audit-log/                 # Cryptographic SHA-256 audit log verifier
+│   │   ├── settings/                  # SLA days configuration & demo reset
+│   │   └── globals.css                # Tailwind base styles & color tokens
+│   ├── components/
+│   │   ├── layout/                    # Sidebar, TopBar, DemoClock
+│   │   ├── dashboard/                 # Role-specific dashboard sub-components
+│   │   ├── applications/              # StageTimeline, ApplicationDetailDrawer
+│   │   └── common/                    # PageHeader
+│   ├── context/
+│   │   └── AicteContext.tsx           # Global state, demo clock, notifications, SLA config
+│   ├── data/
+│   │   ├── rules.ts                   # Workflow routes & stage definitions
+│   │   ├── sampleApplications.ts      # 25 sample institutional cases across 5 regions
+│   │   ├── sampleDocuments.ts         # Document compliance records
+│   │   └── initialChainedLogs.ts      # Initial cryptographically sealed audit chain
+│   ├── lib/
+│   │   ├── deadlineEngine.ts          # Universal deadline calculation formula
+│   │   ├── notificationEngine.ts      # Automated reminder & escalation triggers
+│   │   └── cryptoLog.ts               # SHA-256 Web Crypto hash chain verifier
+│   └── types/
+│       └── aicte.ts                   # TypeScript interfaces & types
+└── tailwind.config.js                 # Tailwind design system configuration
 ```
 
 ---
 
-## 🤝 Contributing
-
-We welcome contributions from college students across all branches and years! Check out our [CONTRIBUTING.md](CONTRIBUTING.md) to get started with `good first issue` tasks.
-
----
-
-## 📄 License
-
-Distributed under the MIT License. See [LICENSE](LICENSE) for details.
+## 📜 License
+This project is licensed under the MIT License.
